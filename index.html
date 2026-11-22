@@ -348,17 +348,36 @@
             text-align: left;
         }
 
-        .parking-category {
-            margin-bottom: 22px;
+        /* 2 tab: Ô tô / Xe máy */
+        .parking-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
         }
 
-        .parking-category h4 {
-            color: #ffd700; /* Màu vàng nhẹ */
-            font-size: 1.05rem;
-            letter-spacing: .08em;
-            margin-bottom: 12px;
-            text-transform: uppercase;
+        .parking-tab {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 10px 10px 0 0;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-bottom: none;
+            background: rgba(255, 255, 255, .06);
+            color: rgba(255, 255, 255, .75);
+            font-family: inherit;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            cursor: pointer;
+            transition: background .25s ease, color .25s ease, border-color .25s ease;
         }
+
+        .parking-tab.is-active {
+            background: rgba(255, 215, 0, .18);
+            border-color: rgba(255, 215, 0, .45);
+            color: #ffd700;
+        }
+
+        .parking-panel[hidden] { display: none; }
 
         .parking-list {
             display: flex;
@@ -378,9 +397,18 @@
             border-radius: 10px;
             border: 1px solid rgba(255, 215, 0, .24);
             transition: transform .3s ease, background .3s ease, color .3s ease, box-shadow .3s ease;
+            font-family: inherit;
             font-size: .9rem;
             font-weight: 500;
             line-height: 1.5;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .parking-btn.is-selected {
+            background: rgba(255, 215, 0, .22);
+            border-color: rgba(255, 215, 0, .7);
+            box-shadow: inset 0 0 0 1px rgba(255, 215, 0, .3);
         }
 
         /* Icon pin có nhịp sáng nhẹ, giúp nút nổi bật nhưng vẫn tinh tế */
@@ -412,6 +440,58 @@
             border-color: #fff;
             transform: translateY(-2px);
             box-shadow: 0 8px 22px rgba(0,0,0,.28);
+            outline: none;
+        }
+
+        /* Bản đồ bãi gửi xe + trường (dùng OpenStreetMap, không cần API key) */
+        .parking-map-wrap {
+            margin-top: 22px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, .2);
+        }
+
+        .parking-map-head {
+            padding: 9px 14px;
+            background: rgba(255, 215, 0, .08);
+            color: #ffd700;
+            font-size: .8rem;
+            line-height: 1.5;
+        }
+
+        .parking-map-wrap iframe {
+            display: block;
+            width: 100%;
+            height: 230px;
+            border: 0;
+        }
+
+        .map-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 14px;
+        }
+
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 215, 0, .5);
+            background: rgba(255, 215, 0, .12);
+            color: #ffd700;
+            font-size: .82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .25s ease, color .25s ease;
+        }
+
+        .map-link:hover,
+        .map-link:focus-visible {
+            background: #ffd700;
+            color: #2b1d00;
             outline: none;
         }
 
@@ -503,66 +583,69 @@
                 </p>
 
                 <a href="https://www.google.com/maps/dir/?api=1&destination=268+L%C3%BD+Th%C6%B0%E1%BB%9Dng+Ki%E1%BB%87t%2C+Ph%C6%B0%E1%BB%9Dng+Di%C3%AAn+H%E1%BB%92ng%2C+Qu%E1%BA%ADn+10%2C+TP.HCM" target="_blank" rel="noopener noreferrer" class="directions-btn reveal" data-delay="2">
-                    <span aria-hidden="true">🧭</span>
                     <span>Chỉ đường đến trường</span>
                 </a>
 
                 <!-- PHẦN GỬI XE -->
                 <div class="parking-section reveal" data-delay="3">
 
-                    <!-- Ô TÔ -->
-                    <div class="parking-category">
-                        <h4>🚗 Bãi gửi xe Ô TÔ</h4>
+                    <div class="parking-tabs" role="tablist" aria-label="Chọn loại phương tiện">
+                        <button type="button" class="parking-tab is-active" role="tab" aria-selected="true" aria-controls="panel-car" data-tab="car">Ô tô</button>
+                        <button type="button" class="parking-tab" role="tab" aria-selected="false" aria-controls="panel-moto" data-tab="moto">Xe máy</button>
+                    </div>
+
+                    <!-- TAB Ô TÔ -->
+                    <div class="parking-panel" id="panel-car" role="tabpanel">
                         <div class="parking-list">
-                            <a href="https://maps.google.com/?q=Bãi+giữ+xe+ô+tô+Quân+Khu+7+51/2+Thành+Thái,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            <button type="button" class="parking-btn" data-name="Quân Khu 7 (51/2 Thành Thái)" data-lat="10.769999" data-lng="106.665784">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Quân Khu 7 (51/2 Thành Thái) - Mở 24h</span>
-                            </a>
-                            <a href="https://maps.google.com/?q=332+Tô+Hiến+Thành,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            </button>
+                            <button type="button" class="parking-btn" data-name="332 Tô Hiến Thành" data-lat="10.7755793" data-lng="106.6630014">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Bãi giữ xe 332 Tô Hiến Thành - Mở 24h</span>
-                            </a>
-                            <a href="https://maps.google.com/?q=138+Đào+Duy+Từ,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            </button>
+                            <button type="button" class="parking-btn" data-name="138 Đào Duy Từ" data-lat="10.7608154" data-lng="106.6632871">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Bãi giữ xe 138 Đào Duy Từ</span>
-                            </a>
-                            <a href="https://maps.google.com/?q=84+Thành+Thái,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            </button>
+                            <button type="button" class="parking-btn" data-name="84 Thành Thái" data-lat="10.7728541" data-lng="106.6654793">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Bãi giữ xe 84 Thành Thái (5:30 - 22:30)</span>
-                            </a>
-                            <a href="https://maps.google.com/?q=Nhà+thi+đấu+Phú+Thọ,+D3+Lữ+Gia,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            </button>
+                            <button type="button" class="parking-btn" data-name="Nhà thi đấu Phú Thọ (D3 Lữ Gia)" data-lat="10.7706289" data-lng="106.6567257">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Nhà thi đấu Phú Thọ (D3 Lữ Gia) - 5:00 - 22:00</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- XE MÁY -->
-                    <div class="parking-category">
-                        <h4>🛵 Bãi gửi xe MÁY</h4>
+                    <!-- TAB XE MÁY -->
+                    <div class="parking-panel" id="panel-moto" role="tabpanel" hidden>
                         <div class="parking-list">
-                            <a href="https://maps.google.com/?q=268+Lý+Thường+Kiệt,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            <button type="button" class="parking-btn" data-name="Khuôn viên trường (268 Lý Thường Kiệt)" data-lat="10.7728" data-lng="106.6592">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Khuôn viên trường (268 Lý Thường Kiệt) - Lưu ý kẹt xe giờ cao điểm</span>
-                            </a>
-                            <a href="https://maps.google.com/?q=332+Tô+Hiến+Thành,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            </button>
+                            <button type="button" class="parking-btn" data-name="332 Tô Hiến Thành" data-lat="10.7755793" data-lng="106.6630014">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Bãi giữ xe 332 Tô Hiến Thành - Mở 24h</span>
-                            </a>
-                            <a href="https://maps.google.com/?q=84+Thành+Thái,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                            </button>
+                            <button type="button" class="parking-btn" data-name="84 Thành Thái" data-lat="10.7728541" data-lng="106.6654793">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Bãi giữ xe 84 Thành Thái (5:30 - 22:30)</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- MẸO -->
-                    <div class="tips">
-                        <p><strong>💡 Mẹo chọn nhanh:</strong></p>
-                        <p>- <em>Đi Ô tô & về trễ:</em> Ưu tiên bãi mở 24h (Quân Khu 7 hoặc 332 Tô Hiến Thành).</p>
-                        <p>- <em>Đi Xe máy:</em> Ghé sớm khu vực trong trường, nếu đông thì rẽ sang 332 Tô Hiến Thành hoặc 84 Thành Thái.</p>
+                    <!-- BẢN ĐỒ: hiện bãi đã chọn + vị trí trường -->
+                    <div class="parking-map-wrap">
+                        <div class="parking-map-head" id="map-status"></div>Chọn một bãi gửi xe để xem vị trí cùng trường trên bản đồ</div>
+                        <iframe id="parking-map" title="Bản đồ bãi gửi xe và Đại học Bách khoa" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank"></iframe>
+                        <div class="map-actions">
+                            <a id="directions-link" class="map-link" href="https://www.google.com/maps/dir/?api=1&destination=10.7733495,106.6596319" target="_blank" rel="noopener noreferrer">Hướng dẫn di chuyển đến trường</a>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -571,7 +654,7 @@
     <!-- Google Maps API key placeholder -->
     <script>
         // Protected API key: You can do nothing with it anyway :D
-        const GOOGLE_MAPS_API_KEY = "YOUR_API_KEY_HERE";
+        const GOOGLE_MAPS_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
     </script>
 
     <script>
@@ -691,6 +774,69 @@
                 }
                 goToSlide(activeSlideIndex() + (deltaX < 0 ? 1 : -1));
             }, { passive: true });
+
+            /* 4. Tab bãi gửi xe + bản đồ tương tác (OpenStreetMap, không cần API key) */
+            const school = { name: 'Đại học Bách khoa DHQG TP.HCM', lat: 10.7733495, lng: 106.6596319 };
+            const mapFrame = document.getElementById('parking-map');
+            const mapStatus = document.getElementById('map-status');
+            const directionsLink = document.getElementById('directions-link');
+            const parkingButtons = Array.prototype.slice.call(document.querySelectorAll('.parking-btn'));
+
+            function renderMap(spot) {
+                const points = spot ? [school, spot] : [school];
+                const lats = points.map(function (p) { return p.lat; });
+                const lngs = points.map(function (p) { return p.lng; });
+                const pad = 0.004; // chừa viền quanh các điểm
+                const bbox = [
+                    Math.min.apply(null, lngs) - pad,
+                    Math.min.apply(null, lats) - pad,
+                    Math.max.apply(null, lngs) + pad,
+                    Math.max.apply(null, lats) + pad
+                ].join(',');
+                const markers = points.map(function (p) {
+                    return 'marker=' + p.lat + ',' + p.lng;
+                }).join('&');
+
+                mapFrame.src = 'https://www.openstreetmap.org/export/embed.html?bbox=' + bbox + '&layer=mapnik&' + markers;
+
+                if (spot) {
+                    mapStatus.textContent = '📍 ' + spot.name + '  +  ' + school.name;
+                    directionsLink.href = 'https://www.google.com/maps/dir/?api=1&origin=' + spot.lat + ',' + spot.lng +
+                        '&destination=' + school.lat + ',' + school.lng + '&travelmode=driving';
+                } else {
+                    mapStatus.textContent = '📍 Chọn một bãi gửi xe để xem vị trí cùng trường trên bản đồ';
+                    directionsLink.href = 'https://www.google.com/maps/dir/?api=1&destination=' + school.lat + ',' + school.lng;
+                }
+            }
+
+            document.querySelectorAll('.parking-tab').forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    document.querySelectorAll('.parking-tab').forEach(function (item) {
+                        const active = item === tab;
+                        item.classList.toggle('is-active', active);
+                        item.setAttribute('aria-selected', active ? 'true' : 'false');
+                    });
+                    document.querySelectorAll('.parking-panel').forEach(function (panel) {
+                        panel.hidden = panel.id !== 'panel-' + tab.dataset.tab;
+                    });
+                    parkingButtons.forEach(function (button) { button.classList.remove('is-selected'); });
+                    renderMap(null);
+                });
+            });
+
+            parkingButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    parkingButtons.forEach(function (item) { item.classList.remove('is-selected'); });
+                    button.classList.add('is-selected');
+                    renderMap({
+                        name: button.dataset.name,
+                        lat: parseFloat(button.dataset.lat),
+                        lng: parseFloat(button.dataset.lng)
+                    });
+                });
+            });
+
+            renderMap(null);
         })();
     </script>
 
