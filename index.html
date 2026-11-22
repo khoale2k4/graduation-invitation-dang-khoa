@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Thư Mời Tốt Nghiệp - Đăng Khoa</title>
+
+    <!-- SEO & social sharing (Facebook / Zalo / messaging apps) -->
+    <meta name="description" content="Thư mời tốt nghiệp của Đăng Khoa - Đại học Bách khoa DHQG TP.HCM. Thứ Bảy, 28/11/2026, 12:00-14:00. Hẹn gặp bạn!">
+    <meta name="theme-color" content="#0d1b2a">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Thư Mời Tốt Nghiệp - Đăng Khoa">
+    <meta property="og:title" content="Thư Mời Tốt Nghiệp - Đăng Khoa">
+    <meta property="og:description" content="Trân trọng mời bạn đến chung vui trong ngày tốt nghiệp. 28/11/2026 · Đại học Bách khoa DHQG TP.HCM">
+    <meta property="og:url" content="https://khoale2k4.github.io/graduation-invitation-dang-khoa/">
+    <meta property="og:image" content="https://khoale2k4.github.io/graduation-invitation-dang-khoa/bachkhoa.jpg">
+    <meta property="og:image:alt" content="Thư mời tốt nghiệp - Đăng Khoa">
+    <meta property="og:locale" content="vi_VN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thư Mời Tốt Nghiệp - Đăng Khoa">
+    <meta name="twitter:description" content="Trân trọng mời bạn đến chung vui trong ngày tốt nghiệp. 28/11/2026 · Đại học Bách khoa DHQG TP.HCM">
+    <meta name="twitter:image" content="https://khoale2k4.github.io/graduation-invitation-dang-khoa/bachkhoa.jpg">
+
+    <!-- Preload both backgrounds so swiping between slides never flashes -->
+    <link rel="preload" as="image" href="bachkhoa.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="maytinh.jpg">
+
+    <!-- Nhúng Font chữ để giống thiệp mời -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Only hide reveal elements when JavaScript is available -->
+    <script>document.documentElement.classList.add('js');</script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Thiết lập chế độ cuộn mượt mà cho các slide */
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Cấu trúc chung cho các Slide */
+        .slide {
+            height: 100vh;
+            height: 100dvh; /* tránh thanh địa chỉ trên mobile */
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Lớp phủ mờ (overlay) để chữ dễ đọc hơn trên nền ảnh */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(6,12,24,0.42), rgba(6,12,24,0.82));
+            z-index: 1;
+        }
+
+        /* Nội dung nằm trên lớp phủ */
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            padding: 24px;
+        }
+
+        /* Fade-in mượt cho chữ khi slide vào viewport */
+        .js .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .85s cubic-bezier(.22, 1, .36, 1),
+                        transform .85s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .js .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal[data-delay="1"] { transition-delay: .12s; }
+        .reveal[data-delay="2"] { transition-delay: .24s; }
+        .reveal[data-delay="3"] { transition-delay: .36s; }
+
+        /* CSS riêng cho Slide 1 */
+        #slide1 {
+            background-image: url('bachkhoa.jpg');
+        }
+
+        .title-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 11vw, 6.5rem);
+            font-style: italic;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 18px rgba(0,0,0,0.75);
+            letter-spacing: .02em;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3.2vw, 1.5rem);
+            font-weight: 300;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+        }
+
+        .details {
+            font-size: clamp(.9rem, 2.6vw, 1.2rem);
+            font-weight: 300;
+            line-height: 1.8;
+            letter-spacing: .04em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+        }
+
+        /* Nút cuộn xuống */
+        .scroll-down-wrap {
+            position: absolute;
+            bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .js .scroll-down-wrap.reveal { transform: translate(-50%, 24px); }
+        .js .scroll-down-wrap.reveal.is-visible { transform: translate(-50%, 0); }
+
+        .scroll-down {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: bounce 2s infinite;
+            font-size: .9rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            white-space: nowrap;
+            text-decoration: none;
+            color: white;
+            transition: background .3s ease, border-color .3s ease;
+        }
+
+        .scroll-down:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-12px); }
+            60% { transform: translateY(-6px); }
+        }
+
+        /* CSS riêng cho Slide 2 */
+        #slide2 {
+            background-image: url('maytinh.jpg');
+        }
+
+        /* Khung thông tin thiệp mời */
+        .invitation-box {
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 18px;
+            padding: clamp(20px, 4vw, 38px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+            text-align: left;
+            line-height: 1.7;
+
+            /* Thêm thanh cuộn bên trong nếu nội dung quá dài */
+            max-height: 85vh;
+            max-height: 85dvh;
+            overflow-y: auto;
+            overscroll-behavior: contain; /* không kéo cuộn cả trang khi chạm cuối hộp */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,.4) transparent;
+        }
+
+        /* Tùy chỉnh thanh cuộn cho đẹp */
+        .invitation-box::-webkit-scrollbar { width: 6px; }
+        .invitation-box::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px;}
+        .invitation-box::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 10px;}
+        .invitation-box::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.6);}
+
+        .invite-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.15rem, 3vw, 1.5rem);
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .invite-text strong {
+            color: #ffd700;
+            font-style: normal;
+            font-weight: 600;
+            text-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+        }
+
+        .time-date {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 600;
+            line-height: 1.5;
+            letter-spacing: .02em;
+            margin-bottom: 20px;
+        }
+
+        .location {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 26px;
+        }
+
+        /* Phần địa điểm gửi xe */
+        .parking-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 26px;
+            text-align: left;
+        }
+
+        .parking-category {
+            margin-bottom: 22px;
+        }
+
+        .parking-category h4 {
+            color: #ffd700; /* Màu vàng nhẹ */
+            font-size: 1.05rem;
+            letter-spacing: .08em;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .parking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .parking-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.07));
+            color: white;
+            text-decoration: none;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, .24);
+            transition: transform .3s ease, background .3s ease, color .3s ease, box-shadow .3s ease;
+            font-size: .9rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Icon pin có nhịp sáng nhẹ, giúp nút nổi bật nhưng vẫn tinh tế */
+        .pin-icon {
+            flex: 0 0 30px;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, .14);
+            border: 1px solid rgba(255, 215, 0, .38);
+            font-size: .95rem;
+            animation: pinPulse 2.8s ease-in-out infinite;
+        }
+
+        .parking-list .parking-btn:nth-child(3n+2) .pin-icon { animation-delay: .6s; }
+        .parking-list .parking-btn:nth-child(3n+3) .pin-icon { animation-delay: 1.2s; }
+
+        @keyframes pinPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, .38); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 215, 0, 0); }
+        }
+
+        .parking-btn:hover,
+        .parking-btn:focus-visible {
+            background: rgba(255, 255, 255, .95);
+            color: #111;
+            border-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0,0,0,.28);
+            outline: none;
+        }
+
+        .tips {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid #ffd700;
+            padding: 14px 16px;
+            border-radius: 6px;
+            font-size: .85rem;
+            line-height: 1.8;
+            margin-top: 24px;
+        }
+
+        .tips strong { color: #ffd700; }
+
+        /* Responsive cho điện thoại */
+        @media (max-width: 768px) {
+            .content { width: 92%; padding: 16px; }
+            .subtitle { letter-spacing: .22em; }
+            .invitation-box { padding: 20px; max-height: 82dvh; }
+            .parking-btn { gap: 10px; padding: 10px 12px; font-size: .85rem; }
+            .scroll-down { font-size: .8rem; padding: 8px 16px; }
+        }
+
+        /* Tôn trọng cài đặt giảm chuyển động của hệ thống */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+            .js .reveal,
+            .js .scroll-down-wrap.reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SLIDE 1 -->
+    <div class="slide" id="slide1">
+        <div class="content">
+            <h1 class="title-name reveal">Đăng Khoa</h1>
+            <h2 class="subtitle reveal" data-delay="1">Lễ tốt nghiệp</h2>
+            <p class="details reveal" data-delay="2">Cử nhân Khoa học Máy tính · Niên khóa 2022</p>
+        </div>
+
+        <!-- Icon mũi tên chỉ xuống để gợi ý vuốt/cuộn -->
+        <div class="scroll-down-wrap reveal" data-delay="3">
+            <a href="#slide2" class="scroll-down">▼ Vuốt để xem chi tiết ▼</a>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide" id="slide2">
+        <div class="content">
+            <div class="invitation-box">
+                <p class="invite-text reveal">Trân trọng mời bạn đến chung vui.</p>
+
+                <h3 class="time-date reveal" data-delay="1">Thứ Bảy, 28/11/2026<br>12:00–14:00</h3>
+
+                <p class="location reveal" data-delay="2">
+                    <strong>Trường Đại học Bách khoa DHQG TP.HCM</strong><br>
+                    268 Lý Thường Kiệt, phường Diên Hồng<br>
+                    (quận 10 cũ), TP.HCM
+                </p>
+
+                <!-- PHẦN GỬI XE -->
+                <div class="parking-section reveal" data-delay="3">
+
+                    <!-- Ô TÔ -->
+                    <div class="parking-category">
+                        <h4>🚗 Bãi gửi xe Ô TÔ</h4>
+                        <div class="parking-list">
+                            <a href="https://maps.google.com/?q=Bãi+giữ+xe+ô+tô+Quân+Khu+7+51/2+Thành+Thái,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Quân Khu 7 (51/2 Thành Thái) - Mở 24h</span>
+                            </a>
+                            <a href="https://maps.google.com/?q=332+Tô+Hiến+Thành,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Bãi giữ xe 332 Tô Hiến Thành - Mở 24h</span>
+                            </a>
+                            <a href="https://maps.google.com/?q=138+Đào+Duy+Từ,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Bãi giữ xe 138 Đào Duy Từ</span>
+                            </a>
+                            <a href="https://maps.google.com/?q=84+Thành+Thái,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Bãi giữ xe 84 Thành Thái (5:30 - 22:30)</span>
+                            </a>
+                            <a href="https://maps.google.com/?q=Nhà+thi+đấu+Phú+Thọ,+D3+Lữ+Gia,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Nhà thi đấu Phú Thọ (D3 Lữ Gia) - 5:00 - 22:00</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- XE MÁY -->
+                    <div class="parking-category">
+                        <h4>🛵 Bãi gửi xe MÁY</h4>
+                        <div class="parking-list">
+                            <a href="https://maps.google.com/?q=268+Lý+Thường+Kiệt,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Khuôn viên trường (268 Lý Thường Kiệt) - Lưu ý kẹt xe giờ cao điểm</span>
+                            </a>
+                            <a href="https://maps.google.com/?q=332+Tô+Hiến+Thành,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Bãi giữ xe 332 Tô Hiến Thành - Mở 24h</span>
+                            </a>
+                            <a href="https://maps.google.com/?q=84+Thành+Thái,+Quận+10,+TP.HCM" target="_blank" rel="noopener noreferrer" class="parking-btn">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Bãi giữ xe 84 Thành Thái (5:30 - 22:30)</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MẸO -->
+                    <div class="tips">
+                        <p><strong>💡 Mẹo chọn nhanh:</strong></p>
+                        <p>- <em>Đi Ô tô & về trễ:</em> Ưu tiên bãi mở 24h (Quân Khu 7 hoặc 332 Tô Hiến Thành).</p>
+                        <p>- <em>Đi Xe máy:</em> Ghé sớm khu vực trong trường, nếu đông thì rẽ sang 332 Tô Hiến Thành hoặc 84 Thành Thái.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Maps API key placeholder -->
+    <script>
+        // Protected API key: You can do nothing with it anyway :D
+        const GOOGLE_MAPS_API_KEY = "YOUR_API_KEY_HERE";
+    </script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* 1. Tên người nhận từ URL: ?to=Nguyen%20Van%20A */
+            function getRecipientName() {
+                const match = window.location.search.match(/[?&]to=([^&]*)/);
+                if (!match || !match[1]) return '';
+                try {
+                    // decodeURIComponent xử lý dấu cách và tiếng Việt trong URL
+                    return decodeURIComponent(match[1].replace(/\+/g, ' ')).trim();
+                } catch (error) {
+                    return match[1].trim();
+                }
+            }
+
+            const inviteText = document.querySelector('.invite-text');
+            if (inviteText) {
+                const recipientName = getRecipientName();
+                inviteText.textContent = ''; // không chèn trực tiếp input từ URL vào HTML
+                if (recipientName) {
+                    const nameElement = document.createElement('strong');
+                    nameElement.textContent = recipientName;
+                    inviteText.append('Trân trọng mời ', nameElement, ' đến chung vui.');
+                } else {
+                    inviteText.textContent = 'Trân trọng mời bạn đến chung vui.';
+                }
+            }
+
+            /* 2. Fade-in chữ khi nội dung vào viewport */
+            const revealItems = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+            function showVisibleItems() {
+                revealItems.forEach(function (item) {
+                    const rect = item.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+                        item.classList.add('is-visible');
+                    }
+                });
+            }
+
+            // IntersectionObserver là chính; scroll/resize là dự phòng cho WebView
+            // không chạy callback của observer (khi đó chữ vẫn luôn hiển thị).
+            if ('IntersectionObserver' in window) {
+                const revealObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+                revealItems.forEach(function (item) { revealObserver.observe(item); });
+            }
+
+            window.addEventListener('scroll', showVisibleItems, { passive: true });
+            window.addEventListener('resize', showVisibleItems);
+            window.requestAnimationFrame(showVisibleItems);
+            window.setTimeout(showVisibleItems, 400);
+
+            /* 3. Vuốt ngang bằng tay để chuyển slide (cảm giác như app) */
+            const slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+            let startX = 0;
+            let startY = 0;
+            let startTime = 0;
+            let isNavigating = false;
+
+            function activeSlideIndex() {
+                const viewportCenter = window.innerHeight / 2;
+                let index = 0;
+                let smallestDistance = Infinity;
+                slides.forEach(function (slide, position) {
+                    const rect = slide.getBoundingClientRect();
+                    const distance = Math.abs(rect.top + rect.height / 2 - viewportCenter);
+                    if (distance < smallestDistance) {
+                        smallestDistance = distance;
+                        index = position;
+                    }
+                });
+                return index;
+            }
+
+            function goToSlide(index) {
+                if (isNavigating) return;
+                const target = slides[Math.max(0, Math.min(slides.length - 1, index))];
+                if (!target) return;
+                isNavigating = true;
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                window.setTimeout(function () { isNavigating = false; }, 700);
+            }
+
+            document.addEventListener('touchstart', function (event) {
+                startTime = 0;
+                if (event.touches.length !== 1 || isNavigating) return;
+
+                const target = event.target instanceof Element ? event.target : null;
+                const box = target && target.closest('.invitation-box');
+                // Nếu hộp nội dung đang cuộn được thì ưu tiên cuộn bên trong hộp
+                if (box && box.scrollHeight > box.clientHeight + 2) return;
+
+                startX = event.touches[0].clientX;
+                startY = event.touches[0].clientY;
+                startTime = Date.now();
+            }, { passive: true });
+
+            document.addEventListener('touchend', function (event) {
+                if (!startTime) return;
+                const deltaX = event.changedTouches[0].clientX - startX;
+                const deltaY = event.changedTouches[0].clientY - startY;
+                const elapsed = Date.now() - startTime;
+                startTime = 0;
+
+                if (elapsed > 900 || Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) {
+                    return; // vuốt dọc: để scroll-snap xử lý như bản đồ tự nhiên
+                }
+                goToSlide(activeSlideIndex() + (deltaX < 0 ? 1 : -1));
+            }, { passive: true });
+        })();
+    </script>
+
+</body>
+</html>
