@@ -21,8 +21,9 @@
     <meta name="twitter:description" content="Trân trọng mời bạn đến chung vui trong ngày tốt nghiệp. 28/11/2026 · Đại học Bách khoa DHQG TP.HCM">
     <meta name="twitter:image" content="https://khoale2k4.github.io/graduation-invitation-dang-khoa/bachkhoa.jpg">
 
-    <!-- Preload both backgrounds so swiping between slides never flashes -->
+    <!-- Preload all 3 backgrounds so swiping between slides never flashes -->
     <link rel="preload" as="image" href="bachkhoa.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="meme.jpeg">
     <link rel="preload" as="image" href="maytinh.jpg">
 
     <!-- Nhúng Font chữ để giống thiệp mời -->
@@ -178,8 +179,63 @@
             60% { transform: translateY(-6px); }
         }
 
-        /* CSS riêng cho Slide 2 */
+        /* CSS riêng cho Slide 2 (lời tri ân) */
         #slide2 {
+            background-image: url('meme.jpeg');
+        }
+
+        .thanks-card {
+            background: rgba(10, 16, 30, 0.42);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            border-radius: 20px;
+            padding: clamp(24px, 5vw, 48px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+            max-height: 85vh;
+            max-height: 85dvh;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,.4) transparent;
+        }
+
+        .thanks-eyebrow {
+            font-size: clamp(.75rem, 2.4vw, .9rem);
+            font-weight: 500;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: #ffd700;
+            margin-bottom: 18px;
+        }
+
+        .thanks-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.6rem, 5vw, 2.6rem);
+            line-height: 1.35;
+            margin-bottom: 20px;
+            text-shadow: 0 3px 14px rgba(0,0,0,.6);
+        }
+
+        .thanks-text {
+            font-size: clamp(.95rem, 2.6vw, 1.1rem);
+            font-weight: 300;
+            line-height: 1.9;
+            text-shadow: 0 2px 8px rgba(0,0,0,.6);
+        }
+
+        .thanks-sign {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.05rem, 3vw, 1.3rem);
+            line-height: 1.6;
+            margin-top: 22px;
+            color: #ffd700;
+        }
+
+        /* CSS riêng cho Slide 3 (thư mời & gửi xe) */
+        #slide3 {
             background-image: url('maytinh.jpg');
         }
 
@@ -329,6 +385,8 @@
         @media (max-width: 768px) {
             .content { width: 92%; padding: 16px; }
             .subtitle { letter-spacing: .22em; }
+            .thanks-card { padding: 22px; max-height: 82dvh; }
+            .thanks-text { line-height: 1.8; }
             .invitation-box { padding: 20px; max-height: 82dvh; }
             .parking-btn { gap: 10px; padding: 10px 12px; font-size: .85rem; }
             .scroll-down { font-size: .8rem; padding: 8px 16px; }
@@ -359,12 +417,33 @@
 
         <!-- Icon mũi tên chỉ xuống để gợi ý vuốt/cuộn -->
         <div class="scroll-down-wrap reveal" data-delay="3">
-            <a href="#slide2" class="scroll-down">▼ Vuốt để xem chi tiết ▼</a>
+            <a href="#slide2" class="scroll-down">▼ Vuốt để xem tiếp ▼</a>
         </div>
     </div>
 
-    <!-- SLIDE 2 -->
+    <!-- SLIDE 2 (MỚI): Lời tri ân -->
     <div class="slide" id="slide2">
+        <div class="content">
+            <div class="thanks-card">
+                <p class="thanks-eyebrow reveal">Lời tri ân</p>
+
+                <h2 class="thanks-title reveal" data-delay="1">Cảm ơn vì đã cùng mình đi qua hành trình này.</h2>
+
+                <p class="thanks-text reveal" data-delay="2">
+                    Ngày tốt nghiệp này không chỉ là dấu mốc của riêng mình. Mình xin gửi lời cảm ơn chân thành đến gia đình đã luôn tin tưởng và động viên, đến các thầy cô đã tận tâm chỉ dạy, và đến bạn bè đã cùng mình đi qua từng buổi học, từng deadline và cả những lần vấp vã đáng nhớ. Nhờ có các bạn, hành trình bốn năm qua trở nên ấm áp và ý nghĩa hơn rất nhiều. Hẹn gặp lại tất cả trong ngày vui này để cùng chia sẻ niềm vui và lưu giữ thêm một kỷ niệm khó quên.
+                </p>
+
+                <p class="thanks-sign reveal" data-delay="3">Yêu thương,<br>Đăng Khoa</p>
+            </div>
+        </div>
+
+        <div class="scroll-down-wrap reveal" data-delay="3">
+            <a href="#slide3" class="scroll-down">▼ Xem chi tiết thiệp mời ▼</a>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Thư mời & thông tin gửi xe -->
+    <div class="slide" id="slide3">
         <div class="content">
             <div class="invitation-box">
                 <p class="invite-text reveal">Trân trọng mời bạn đến chung vui.</p>
@@ -448,7 +527,7 @@
         (function () {
             'use strict';
 
-            /* 1. Tên người nhận từ URL: ?to=Nguyen%20Van%20A */
+            /* 1. Tên người nhận từ URL (hiển thị trên Slide 3): ?to=Nguyen%20Van%20A */
             function getRecipientName() {
                 const match = window.location.search.match(/[?&]to=([^&]*)/);
                 if (!match || !match[1]) return '';
@@ -540,7 +619,7 @@
                 if (event.touches.length !== 1 || isNavigating) return;
 
                 const target = event.target instanceof Element ? event.target : null;
-                const box = target && target.closest('.invitation-box');
+                const box = target && target.closest('.invitation-box, .thanks-card');
                 // Nếu hộp nội dung đang cuộn được thì ưu tiên cuộn bên trong hộp
                 if (box && box.scrollHeight > box.clientHeight + 2) return;
 
