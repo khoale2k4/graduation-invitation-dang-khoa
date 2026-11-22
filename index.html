@@ -305,10 +305,31 @@
             margin-bottom: 20px;
         }
 
+        .location-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 26px;
+        }
+
+        .location-row .location {
+            flex: 1 1 auto;
+            margin-bottom: 0;
+        }
+
+        .location-row .directions-btn {
+            flex: 0 0 auto;
+            margin: 0;
+        }
+
         .location {
             font-size: 1rem;
             line-height: 1.8;
             margin-bottom: 26px;
+        }
+
+        @media (max-width: 520px) {
+            .location-row { flex-wrap: wrap; }
         }
 
         /* Nút chỉ đường đến trường */
@@ -576,15 +597,17 @@
 
                 <h3 class="time-date reveal" data-delay="1">Thứ Bảy, 28/11/2026<br>12:00–14:00</h3>
 
-                <p class="location reveal" data-delay="2">
-                    <strong>Trường Đại học Bách khoa DHQG TP.HCM</strong><br>
-                    268 Lý Thường Kiệt, phường Diên Hồng<br>
-                    (quận 10 cũ), TP.HCM
-                </p>
+                <div class="location-row">
+                    <p class="location reveal" data-delay="2">
+                        <strong>Trường Đại học Bách khoa DHQG TP.HCM</strong><br>
+                        268 Lý Thường Kiệt, phường Diên Hồng<br>
+                        (quận 10 cũ), TP.HCM
+                    </p>
 
-                <a href="https://www.google.com/maps/dir/?api=1&destination=268+L%C3%BD+Th%C6%B0%E1%BB%9Dng+Ki%E1%BB%87t%2C+Ph%C6%B0%E1%BB%9Dng+Di%C3%AAn+H%E1%BB%92ng%2C+Qu%E1%BA%ADn+10%2C+TP.HCM" target="_blank" rel="noopener noreferrer" class="directions-btn reveal" data-delay="2">
-                    <span>Chỉ đường đến trường</span>
-                </a>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=268+L%C3%BD+Th%C6%B0%E1%BB%9Dng+Ki%E1%BB%87t%2C+Ph%C6%B0%E1%BB%9Dng+Di%C3%AAn+H%E1%BB%92ng%2C+Qu%E1%BA%ADn+10%2C+TP.HCM" target="_blank" rel="noopener noreferrer" class="directions-btn reveal" data-delay="2">
+                        <span>Chỉ đường đến trường</span>
+                    </a>
+                </div>
 
                 <!-- PHẦN GỬI XE -->
                 <div class="parking-section reveal" data-delay="3">
