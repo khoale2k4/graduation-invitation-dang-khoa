@@ -509,11 +509,10 @@
             outline: none;
         }
 
-        /* Bản đồ bãi gửi xe + trường (dùng OpenStreetMap, không cần API key) */
+        /* Bản đồ bãi gửi xe + trường (Google Maps JavaScript API) */
         .parking-map-wrap {
-            /* Full chiều ngang: tràn toàn bộ chiều rộng màn hình */
-            width: 100vw;
-            margin: 18px 0 0 calc(50% - 50vw);
+            /* Tràn đúng bằng padding của card -> full chiều ngang bên trong card */
+            margin: 18px calc(-1 * clamp(20px, 4vw, 38px)) 0;
             border-top: 1px solid rgba(255, 255, 255, .2);
             border-bottom: 1px solid rgba(255, 255, 255, .2);
             overflow: hidden;
@@ -521,24 +520,31 @@
         }
 
         .parking-map-head {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px 18px;
             padding: 9px 14px;
             background: rgba(255, 215, 0, .08);
             color: #ffd700;
             font-size: .8rem;
             line-height: 1.5;
+            white-space: normal;
+            overflow-wrap: anywhere;
         }
+
+        .parking-map-head span { flex: 1 1 220px; }
 
         .parking-map-wrap #parking-map {
             display: block;
             width: 100%;
-            height: 220px;
+            height: 200px;
             background: rgba(0, 0, 0, .25);
         }
 
-        /* Slide 3: nhường chỗ cho bản đồ full-width bên dưới */
+        /* Slide 3: card cao để vừa danh sách bãi và bản đồ bên trong */
         #slide3 .invitation-box {
-            max-height: calc(85vh - 290px);
-            max-height: calc(85dvh - 290px);
+            max-height: calc(100vh - 90px);
+            max-height: calc(100dvh - 90px);
         }
 
         .tips {
@@ -561,6 +567,7 @@
             .thanks-text { line-height: 1.8; }
             .invitation-box { padding: 20px; max-height: 82dvh; }
             .parking-btn { gap: 10px; padding: 10px 12px; font-size: .85rem; }
+            .parking-map-wrap { margin-left: -20px; margin-right: -20px; }
             .parking-map-wrap #parking-map { height: 180px; }
             .scroll-down { font-size: .8rem; padding: 8px 16px; }
         }
@@ -666,6 +673,24 @@
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Nhà thi đấu Phú Thọ (D3 Lữ Gia) - 5:00 - 22:00</span>
                             </button>
+                            <button type="button" class="parking-btn" data-name="KTX Bách khoa (497 Hòa Hảo)" data-lat="10.7599271" data-lng="106.6621532"
+                                title="Gần cụm Lý Thường Kiệt – Hòa Hảo – Đào Duy Từ, phía sau Co.opmart Lý Thường Kiệt. Nên hỏi trước quy định nhận xe vãng lai trong ngày và khung giờ hoạt động vì một số khu vực ưu tiên sinh viên/cư dân."
+                                data-note="Gần cụm Lý Thường Kiệt – Hòa Hảo – Đào Duy Từ, phía sau Co.opmart Lý Thường Kiệt. Hỏi trước quy định nhận xe vãng lai trong ngày và khung giờ hoạt động (một số khu vực ưu tiên sinh viên/cư dân).">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>KTX Bách khoa (497 Hòa Hảo) - hỏi trước khi gửi</span>
+                            </button>
+                            <button type="button" class="parking-btn" data-name="BV Nhân dân 115 (527 Sư Vạn Hạnh)" data-lat="10.7744865" data-lng="106.6665778"
+                                title="Quanh trục Sư Vạn Hạnh – Hòa Hưng, thường có bãi nhận ô tô theo lượt/trong ngày. Đi bộ hoặc xe công nghệ sang Lý Thường Kiệt mất thêm vài phút nhưng dễ xoay xở hơn khi mặt tiền trường kẹt xe."
+                                data-note="Bãi ô tô nhận theo lượt/trong ngày quanh trục Sư Vạn Hạnh – Hòa Hưng. Sang Lý Thường Kiệt mất thêm vài phút nhưng dễ xoay xở hơn khi mặt tiền trường kẹt xe.">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>BV Nhân dân 115 (527 Sư Vạn Hạnh) - nhận theo lượt</span>
+                            </button>
+                            <button type="button" class="parking-btn" data-name="ĐH Y Dược (215 Hồng Bàng)" data-lat="10.7552173" data-lng="106.6645696"
+                                title="Hướng dự phòng nếu đi từ phía Tây/Nam lên và các bãi sát Thành Thái – Lý Thường Kiệt đã kín chỗ."
+                                data-note="Hướng dự phòng nếu đi từ phía Tây/Nam lên và các bãi sát Thành Thái – Lý Thường Kiệt đã kín chỗ.">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>ĐH Y Dược (215 Hồng Bàng) - hướng dự phòng</span>
+                            </button>
                         </div>
                     </div>
 
@@ -684,14 +709,30 @@
                                 <span class="pin-icon" aria-hidden="true">📍</span>
                                 <span>Bãi giữ xe 84 Thành Thái (5:30 - 22:30)</span>
                             </button>
+                            <button type="button" class="parking-btn" data-name="KTX Bách khoa (497 Hòa Hảo)" data-lat="10.7599271" data-lng="106.6621532"
+                                title="Khu vực KTX Bách khoa (497 Hòa Hảo) & cụm quanh Co.opmart Lý Thường Kiệt. Ngày cao điểm hoặc cuối tuần/lễ nên kiểm tra trực tiếp với bảo vệ xem có nhận vé lượt cho khách dự lễ hay không, đồng thời lưu ý khung giờ đóng cửa."
+                                data-note="KTX Bách khoa (497 Hòa Hảo) & cụm quanh Co.opmart Lý Thường Kiệt. Cao điểm/cuối tuần/lễ: hỏi bảo vệ về vé lượt cho khách dự lễ và khung giờ đóng cửa.">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>KTX Bách khoa (497 Hòa Hảo) - hỏi vé lượt</span>
+                            </button>
+                            <button type="button" class="parking-btn" data-name="Dọc Lý Thường Kiệt (gần cổng trường)" data-lat="10.7740592" data-lng="106.6571692"
+                                title="Các điểm giữ xe máy lẻ quanh trục Lý Thường Kiệt – Tô Hiến Thành – Thành Thái. Nên gửi hơi giãn ra khỏi cổng chính một đoạn ngắn rồi đi bộ vào trường: đỡ chen chúc lúc gửi/lấy xe và dễ thoát hướng sau buổi lễ."
+                                data-note="Gửi hơi giãn ra khỏi cổng chính một đoạn ngắn rồi đi bộ vào trường — đỡ chen chúc lúc gửi/lấy xe và dễ thoát hướng sau buổi lễ.">
+                                <span class="pin-icon" aria-hidden="true">📍</span>
+                                <span>Dọc Lý Thường Kiệt - gửi lùi rồi đi bộ</span>
+                            </button>
                         </div>
                     </div>
 
-                </div>
-                <!-- BẢN ĐỒ full chiều ngang: luôn có 2 pin = trường học + bãi gửi xe đang chọn -->
-                <div class="parking-map-wrap">
-                    <div class="parking-map-head" id="map-status">📍 Đại học Bách khoa DHQG TP.HCM</div>
-                    <div id="parking-map" role="img" aria-label="Bản đồ vị trí trường và bãi gửi xe"></div>
+                    <!-- BẢN ĐỒ: nằm ngay dưới danh sách bãi, tràn-full chiều ngang của card -->
+                    <div class="parking-map-wrap">
+                        <div class="parking-map-head" id="map-status">
+                            <span>🏫 Trường Đại học Bách khoa DHQG TP.HCM</span>
+                            <span>📍 Quân Khu 7 (51/2 Thành Thái)</span>
+                        </div>
+                        <div id="parking-map" role="img" aria-label="Bản đồ vị trí trường và bãi gửi xe"></div>
+                    </div>
+
                 </div>
             </div>
 
@@ -831,6 +872,9 @@
 
             let map = null;
             let spotMarker = null;
+            let routeLine = null;
+            let routeCasing = null;
+            let routeRequestId = 0;
             let currentSpot = null;
             const infoWindow = { instance: null };
 
@@ -857,7 +901,8 @@
                 return {
                     name: button.dataset.name,
                     lat: parseFloat(button.dataset.lat),
-                    lng: parseFloat(button.dataset.lng)
+                    lng: parseFloat(button.dataset.lng),
+                    note: button.dataset.note || ''
                 };
             }
 
@@ -870,20 +915,103 @@
                 const bounds = new google.maps.LatLngBounds();
                 bounds.extend({ lat: school.lat, lng: school.lng });
                 if (spot) bounds.extend({ lat: spot.lat, lng: spot.lng });
-                map.fitBounds(bounds, 48);
+                // Chừa viền lớn để không cắt tên pin / info window
+                map.fitBounds(bounds, { top: 70, bottom: 70, left: 50, right: 50 });
             }
 
             function showInfo(marker, title, subtitle) {
                 if (!infoWindow.instance) infoWindow.instance = new google.maps.InfoWindow();
-                infoWindow.instance.setContent('<strong>' + title + '</strong>' + (subtitle ? '<br>' + subtitle : ''));
+                infoWindow.instance.setContent(
+                    '<div style="max-width:260px;line-height:1.5;font-size:13px">' +
+                    '<strong>' + title + '</strong>' +
+                    (subtitle ? '<div style="margin-top:4px">' + subtitle + '</div>' : '') +
+                    '</div>'
+                );
                 infoWindow.instance.open(map, marker);
+            }
+
+            // Vẽ đường đi theo cung đường thật (OSRM, không cần API key)
+            function setRoutePath(path, spot) {
+                if (!routeCasing) {
+                    routeCasing = new google.maps.Polyline({
+                        map: map,
+                        strokeColor: '#735c00',
+                        strokeOpacity: 0.6,
+                        strokeWeight: 7,
+                        zIndex: 1
+                    });
+                }
+                if (!routeLine) {
+                    routeLine = new google.maps.Polyline({
+                        map: map,
+                        strokeColor: '#ffd700',
+                        strokeOpacity: 1,
+                        strokeWeight: 3,
+                        zIndex: 2
+                    });
+                }
+                routeCasing.setPath(path);
+                routeLine.setPath(path);
+
+                const bounds = new google.maps.LatLngBounds();
+                path.forEach(function (p) { bounds.extend(p); });
+                bounds.extend({ lat: school.lat, lng: school.lng });
+                if (spot) bounds.extend({ lat: spot.lat, lng: spot.lng });
+                // Chừa viền để không cắt tên pin / thông tin
+                map.fitBounds(bounds, { top: 70, bottom: 70, left: 50, right: 50 });
+            }
+
+            function drawRoadRoute(spot) {
+                const requestId = ++routeRequestId;
+                const pair = spot.lng + ',' + spot.lat + ';' + school.lng + ',' + school.lat;
+                const options = '?overview=full&geometries=geojson';
+                const sources = [
+                    'https://routing.openstreetmap.de/routed-foot/route/v1/driving/' + pair + options,
+                    'https://router.project-osrm.org/route/v1/driving/' + pair + options
+                ];
+
+                function fallback() {
+                    if (requestId !== routeRequestId) return;
+                    setRoutePath([
+                        { lat: school.lat, lng: school.lng },
+                        { lat: spot.lat, lng: spot.lng }
+                    ], spot);
+                }
+
+                function trySource(index) {
+                    if (index >= sources.length) { fallback(); return; }
+                    fetch(sources[index])
+                        .then(function (response) {
+                            if (!response.ok) throw new Error('HTTP ' + response.status);
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            if (requestId !== routeRequestId) return;
+                            if (!data || data.code !== 'Ok' || !data.routes || !data.routes[0]) {
+                                throw new Error('Không có route');
+                            }
+                            const coords = data.routes[0].geometry.coordinates;
+                            if (!coords || coords.length < 2) throw new Error('Route quá ngắn');
+                            // GeoJSON trả về [lng, lat]
+                            setRoutePath(coords.map(function (c) {
+                                return { lat: c[1], lng: c[0] };
+                            }), spot);
+                        })
+                        .catch(function () {
+                            if (requestId === routeRequestId) trySource(index + 1);
+                        });
+                }
+
+                trySource(0);
             }
 
             // Luôn có 2 pin: trường học + bãi gửi xe đang chọn
             function renderMap(spot) {
                 if (!spot) return;
                 currentSpot = spot;
-                if (mapStatus) mapStatus.textContent = '📍 ' + school.name + '  +  ' + spot.name;
+                if (mapStatus) {
+                    mapStatus.innerHTML = '<span>🏫 ' + school.name + '</span><span>📍 ' + spot.name + '</span>';
+                }
                 if (!map) return; // API chưa tải xong -> initParkingMap sẽ áp dụng currentSpot
 
                 if (!spotMarker) {
@@ -893,12 +1021,15 @@
                         label: { text: 'P', color: '#fff', fontSize: '13px', fontWeight: 'bold' }
                     });
                     google.maps.event.addListener(spotMarker, 'click', function () {
-                        showInfo(spotMarker, spotMarker.getTitle(), 'Bãi gửi xe đã chọn');
+                        showInfo(spotMarker, spotMarker.getTitle(), spotMarker.get('note') || 'Bãi gửi xe đã chọn');
                     });
                 }
                 spotMarker.setPosition({ lat: spot.lat, lng: spot.lng });
                 spotMarker.setTitle(spot.name);
-                fitBoth(spot);
+                spotMarker.set('note', spot.note || '');
+
+                // Đường đi theo cung đường thật (bị chặn thì mới fallback nét thẳng)
+                drawRoadRoute(spot);
             }
 
             // Được gọi khi Google Maps JavaScript API tải xong
@@ -936,6 +1067,19 @@
                 document.head.appendChild(mapsScript);
             }
 
+            // Khi chọn bãi: cuộn bên trong card để bản đồ và 2 pin hiện ra ngay
+            function scrollToMap() {
+                const box = document.querySelector('.invitation-box');
+                const wrap = document.querySelector('.parking-map-wrap');
+                if (!box || !wrap) return;
+                const offset = wrap.getBoundingClientRect().top - box.getBoundingClientRect().top;
+                const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                box.scrollTo({
+                    top: Math.max(0, box.scrollTop + offset - 8),
+                    behavior: reduce ? 'auto' : 'smooth'
+                });
+            }
+
             document.querySelectorAll('.parking-tab').forEach(function (tab) {
                 tab.addEventListener('click', function () {
                     document.querySelectorAll('.parking-tab').forEach(function (item) {
@@ -957,6 +1101,7 @@
                     parkingButtons.forEach(function (item) { item.classList.remove('is-selected'); });
                     button.classList.add('is-selected');
                     renderMap(spotFromButton(button));
+                    scrollToMap();
                 });
             });
 
