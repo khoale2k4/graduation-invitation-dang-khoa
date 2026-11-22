@@ -270,6 +270,7 @@
             /* Thêm thanh cuộn bên trong nếu nội dung quá dài */
             max-height: 85vh;
             max-height: 85dvh;
+            overflow-x: hidden; /* tránh thanh cuộn ngang khi bản đồ tràn padding */
             overflow-y: auto;
             overscroll-behavior: contain; /* không kéo cuộn cả trang khi chạm cuối hộp */
             scrollbar-width: thin;
@@ -406,6 +407,50 @@
             gap: 10px;
         }
 
+        .parking-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .parking-row .parking-btn {
+            flex: 1 1 auto;
+            width: auto;
+        }
+
+        /* Mũi tên chỉ đường hiện bên phải khi bãi được chọn */
+        .parking-arrow {
+            flex: 0 0 36px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #ffd700;
+            color: #2b1d00;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-6px);
+            transition: opacity .25s ease, transform .25s ease, visibility .25s ease, box-shadow .25s ease;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, .28);
+        }
+
+        .parking-btn.is-selected + .parking-arrow {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .parking-arrow:hover,
+        .parking-arrow:focus-visible {
+            box-shadow: 0 6px 18px rgba(255, 215, 0, .5);
+            transform: translateX(2px);
+            outline: none;
+        }
+
         .parking-btn {
             display: flex;
             align-items: center;
@@ -446,8 +491,8 @@
             animation: pinPulse 2.8s ease-in-out infinite;
         }
 
-        .parking-list .parking-btn:nth-child(3n+2) .pin-icon { animation-delay: .6s; }
-        .parking-list .parking-btn:nth-child(3n+3) .pin-icon { animation-delay: 1.2s; }
+        .parking-row:nth-child(3n+2) .pin-icon { animation-delay: .6s; }
+        .parking-row:nth-child(3n+3) .pin-icon { animation-delay: 1.2s; }
 
         @keyframes pinPulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, .38); }
@@ -466,9 +511,11 @@
 
         /* Bản đồ bãi gửi xe + trường (dùng OpenStreetMap, không cần API key) */
         .parking-map-wrap {
-            margin-top: 22px;
-            border: 1px solid rgba(255, 255, 255, .2);
-            border-radius: 12px;
+            /* Full chiều ngang: tràn toàn bộ chiều rộng màn hình */
+            width: 100vw;
+            margin: 18px 0 0 calc(50% - 50vw);
+            border-top: 1px solid rgba(255, 255, 255, .2);
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
             overflow: hidden;
             background: rgba(0, 0, 0, .2);
         }
@@ -481,39 +528,17 @@
             line-height: 1.5;
         }
 
-        .parking-map-wrap iframe {
+        .parking-map-wrap #parking-map {
             display: block;
             width: 100%;
-            height: 230px;
-            border: 0;
+            height: 220px;
+            background: rgba(0, 0, 0, .25);
         }
 
-        .map-actions {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px 14px;
-        }
-
-        .map-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 215, 0, .5);
-            background: rgba(255, 215, 0, .12);
-            color: #ffd700;
-            font-size: .82rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background .25s ease, color .25s ease;
-        }
-
-        .map-link:hover,
-        .map-link:focus-visible {
-            background: #ffd700;
-            color: #2b1d00;
-            outline: none;
+        /* Slide 3: nhường chỗ cho bản đồ full-width bên dưới */
+        #slide3 .invitation-box {
+            max-height: calc(85vh - 290px);
+            max-height: calc(85dvh - 290px);
         }
 
         .tips {
@@ -536,6 +561,7 @@
             .thanks-text { line-height: 1.8; }
             .invitation-box { padding: 20px; max-height: 82dvh; }
             .parking-btn { gap: 10px; padding: 10px 12px; font-size: .85rem; }
+            .parking-map-wrap #parking-map { height: 180px; }
             .scroll-down { font-size: .8rem; padding: 8px 16px; }
         }
 
@@ -661,20 +687,17 @@
                         </div>
                     </div>
 
-                    <!-- BẢN ĐỒ: hiện bãi đã chọn + vị trí trường -->
-                    <div class="parking-map-wrap">
-                        <div class="parking-map-head" id="map-status"></div>Chọn một bãi gửi xe để xem vị trí cùng trường trên bản đồ</div>
-                        <iframe id="parking-map" title="Bản đồ bãi gửi xe và Đại học Bách khoa" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank"></iframe>
-                        <div class="map-actions">
-                            <a id="directions-link" class="map-link" href="https://www.google.com/maps/dir/?api=1&destination=10.7733495,106.6596319" target="_blank" rel="noopener noreferrer">Hướng dẫn di chuyển đến trường</a>
-                        </div>
-                    </div>
+                </div>
+                <!-- BẢN ĐỒ full chiều ngang: luôn có 2 pin = trường học + bãi gửi xe đang chọn -->
+                <div class="parking-map-wrap">
+                    <div class="parking-map-head" id="map-status">📍 Đại học Bách khoa DHQG TP.HCM</div>
+                    <div id="parking-map" role="img" aria-label="Bản đồ vị trí trường và bãi gửi xe"></div>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <!-- Google Maps API key placeholder -->
     <script>
         // Protected API key: You can do nothing with it anyway :D
         const GOOGLE_MAPS_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
@@ -779,6 +802,8 @@
                 const box = target && target.closest('.invitation-box, .thanks-card');
                 // Nếu hộp nội dung đang cuộn được thì ưu tiên cuộn bên trong hộp
                 if (box && box.scrollHeight > box.clientHeight + 2) return;
+                // Không chuyển slide khi đang thao tác trên bản đồ
+                if (target && target.closest('.parking-map-wrap')) return;
 
                 startX = event.touches[0].clientX;
                 startY = event.touches[0].clientY;
@@ -798,38 +823,117 @@
                 goToSlide(activeSlideIndex() + (deltaX < 0 ? 1 : -1));
             }, { passive: true });
 
-            /* 4. Tab bãi gửi xe + bản đồ tương tác (OpenStreetMap, không cần API key) */
+            /* 4. Tab bãi gửi xe + mũi tên chỉ đường + bản đồ Google Maps 2 pin */
             const school = { name: 'Đại học Bách khoa DHQG TP.HCM', lat: 10.7733495, lng: 106.6596319 };
-            const mapFrame = document.getElementById('parking-map');
+            const mapEl = document.getElementById('parking-map');
             const mapStatus = document.getElementById('map-status');
-            const directionsLink = document.getElementById('directions-link');
             const parkingButtons = Array.prototype.slice.call(document.querySelectorAll('.parking-btn'));
 
+            let map = null;
+            let spotMarker = null;
+            let currentSpot = null;
+            const infoWindow = { instance: null };
+
+            // Mỗi bãi gửi xe là một hàng: nút chọn + mũi tên chỉ đường (ẩn cho đến khi chọn)
+            parkingButtons.forEach(function (button) {
+                const row = document.createElement('div');
+                row.className = 'parking-row';
+                button.parentNode.insertBefore(row, button);
+                row.appendChild(button);
+
+                const arrow = document.createElement('a');
+                arrow.className = 'parking-arrow';
+                // Không truyền origin -> Google Maps tự dùng vị trí hiện tại của người dùng
+                arrow.href = 'https://www.google.com/maps/dir/?api=1&destination=' +
+                    button.dataset.lat + ',' + button.dataset.lng + '&travelmode=driving';
+                arrow.target = '_blank';
+                arrow.rel = 'noopener noreferrer';
+                arrow.setAttribute('aria-label', 'Chỉ đường từ vị trí của bạn đến ' + button.dataset.name);
+                arrow.textContent = '→';
+                row.appendChild(arrow);
+            });
+
+            function spotFromButton(button) {
+                return {
+                    name: button.dataset.name,
+                    lat: parseFloat(button.dataset.lat),
+                    lng: parseFloat(button.dataset.lng)
+                };
+            }
+
+            function firstButtonInActivePanel() {
+                const panel = document.querySelector('.parking-panel:not([hidden])');
+                return panel && panel.querySelector('.parking-btn');
+            }
+
+            function fitBoth(spot) {
+                const bounds = new google.maps.LatLngBounds();
+                bounds.extend({ lat: school.lat, lng: school.lng });
+                if (spot) bounds.extend({ lat: spot.lat, lng: spot.lng });
+                map.fitBounds(bounds, 48);
+            }
+
+            function showInfo(marker, title, subtitle) {
+                if (!infoWindow.instance) infoWindow.instance = new google.maps.InfoWindow();
+                infoWindow.instance.setContent('<strong>' + title + '</strong>' + (subtitle ? '<br>' + subtitle : ''));
+                infoWindow.instance.open(map, marker);
+            }
+
+            // Luôn có 2 pin: trường học + bãi gửi xe đang chọn
             function renderMap(spot) {
-                const points = spot ? [school, spot] : [school];
-                const lats = points.map(function (p) { return p.lat; });
-                const lngs = points.map(function (p) { return p.lng; });
-                const pad = 0.004; // chừa viền quanh các điểm
-                const bbox = [
-                    Math.min.apply(null, lngs) - pad,
-                    Math.min.apply(null, lats) - pad,
-                    Math.max.apply(null, lngs) + pad,
-                    Math.max.apply(null, lats) + pad
-                ].join(',');
-                const markers = points.map(function (p) {
-                    return 'marker=' + p.lat + ',' + p.lng;
-                }).join('&');
+                if (!spot) return;
+                currentSpot = spot;
+                if (mapStatus) mapStatus.textContent = '📍 ' + school.name + '  +  ' + spot.name;
+                if (!map) return; // API chưa tải xong -> initParkingMap sẽ áp dụng currentSpot
 
-                mapFrame.src = 'https://www.openstreetmap.org/export/embed.html?bbox=' + bbox + '&layer=mapnik&' + markers;
-
-                if (spot) {
-                    mapStatus.textContent = '📍 ' + spot.name + '  +  ' + school.name;
-                    directionsLink.href = 'https://www.google.com/maps/dir/?api=1&origin=' + spot.lat + ',' + spot.lng +
-                        '&destination=' + school.lat + ',' + school.lng + '&travelmode=driving';
-                } else {
-                    mapStatus.textContent = '📍 Chọn một bãi gửi xe để xem vị trí cùng trường trên bản đồ';
-                    directionsLink.href = 'https://www.google.com/maps/dir/?api=1&destination=' + school.lat + ',' + school.lng;
+                if (!spotMarker) {
+                    spotMarker = new google.maps.Marker({
+                        map: map,
+                        title: spot.name,
+                        label: { text: 'P', color: '#fff', fontSize: '13px', fontWeight: 'bold' }
+                    });
+                    google.maps.event.addListener(spotMarker, 'click', function () {
+                        showInfo(spotMarker, spotMarker.getTitle(), 'Bãi gửi xe đã chọn');
+                    });
                 }
+                spotMarker.setPosition({ lat: spot.lat, lng: spot.lng });
+                spotMarker.setTitle(spot.name);
+                fitBoth(spot);
+            }
+
+            // Được gọi khi Google Maps JavaScript API tải xong
+            window.initParkingMap = function () {
+                if (!mapEl || !window.google) return;
+                map = new google.maps.Map(mapEl, {
+                    center: { lat: school.lat, lng: school.lng },
+                    zoom: 15,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    gestureHandling: 'cooperative'
+                });
+
+                const schoolMarker = new google.maps.Marker({
+                    map: map,
+                    position: { lat: school.lat, lng: school.lng },
+                    title: school.name,
+                    label: { text: 'T', color: '#fff', fontSize: '13px', fontWeight: 'bold' }
+                });
+                google.maps.event.addListener(schoolMarker, 'click', function () {
+                    showInfo(schoolMarker, school.name, '268 Lý Thường Kiệt, Phường Diên Hồng');
+                });
+
+                if (currentSpot) renderMap(currentSpot);
+                else fitBoth(null);
+            };
+
+            // Key này chỉ bật Maps JavaScript API (Embed API chưa được kích hoạt)
+            if (mapEl) {
+                const mapsScript = document.createElement('script');
+                mapsScript.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(GOOGLE_MAPS_API_KEY) +
+                    '&v=weekly&loading=async&callback=initParkingMap';
+                mapsScript.async = true;
+                document.head.appendChild(mapsScript);
             }
 
             document.querySelectorAll('.parking-tab').forEach(function (tab) {
@@ -843,7 +947,8 @@
                         panel.hidden = panel.id !== 'panel-' + tab.dataset.tab;
                     });
                     parkingButtons.forEach(function (button) { button.classList.remove('is-selected'); });
-                    renderMap(null);
+                    const first = firstButtonInActivePanel();
+                    if (first) renderMap(spotFromButton(first));
                 });
             });
 
@@ -851,15 +956,13 @@
                 button.addEventListener('click', function () {
                     parkingButtons.forEach(function (item) { item.classList.remove('is-selected'); });
                     button.classList.add('is-selected');
-                    renderMap({
-                        name: button.dataset.name,
-                        lat: parseFloat(button.dataset.lat),
-                        lng: parseFloat(button.dataset.lng)
-                    });
+                    renderMap(spotFromButton(button));
                 });
             });
 
-            renderMap(null);
+            // Ngay khi vào trang đã có 2 pin (trường + bãi đầu tiên)
+            const initialSpot = firstButtonInActivePanel();
+            if (initialSpot) renderMap(spotFromButton(initialSpot));
         })();
     </script>
 
