@@ -151,8 +151,11 @@
         .js .scroll-down-wrap.reveal.is-visible { transform: translate(-50%, 0); }
 
         .scroll-down {
-            display: inline-block;
-            padding: 10px 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 20px;
             border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.08);
@@ -206,10 +209,11 @@
             -webkit-backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.26);
             border-radius: 20px;
-            padding: clamp(24px, 5vw, 48px);
+            padding: clamp(20px, 4vw, 40px);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
-            max-height: 85vh;
-            max-height: 85dvh;
+            /* Đủ chỗ cho toàn bộ lời tri ân trên màn hình 700px -> không thanh cuộn ngầm */
+            max-height: 90vh;
+            max-height: 90dvh;
             overflow-y: auto;
             overscroll-behavior: contain;
             scrollbar-width: thin;
@@ -229,15 +233,15 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: clamp(1.6rem, 5vw, 2.6rem);
-            line-height: 1.35;
-            margin-bottom: 20px;
+            line-height: 1.3;
+            margin-bottom: 14px;
             text-shadow: 0 3px 14px rgba(0,0,0,.6);
         }
 
         .thanks-text {
             font-size: clamp(.95rem, 2.6vw, 1.1rem);
             font-weight: 300;
-            line-height: 1.9;
+            line-height: 1.75;
             text-shadow: 0 2px 8px rgba(0,0,0,.6);
         }
 
@@ -245,8 +249,8 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: clamp(1.05rem, 3vw, 1.3rem);
-            line-height: 1.6;
-            margin-top: 22px;
+            line-height: 1.5;
+            margin-top: 14px;
             color: #ffd700;
         }
 
@@ -298,12 +302,21 @@
             text-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
         }
 
+        /* Ngày giờ bên trái, chip Zalo bên phải cùng một hàng */
+        .date-contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
         .time-date {
             font-size: clamp(1.3rem, 4vw, 1.8rem);
             font-weight: 600;
             line-height: 1.5;
             letter-spacing: .02em;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .location-row {
@@ -323,15 +336,62 @@
             margin: 0;
         }
 
+        /* Chip liên hệ Zalo: căn bên phải, cùng hàng với ngày giờ */
+        .contact-chip-wrap {
+            margin: 0;
+            flex: 0 0 auto;
+            text-align: right;
+        }
+
+        .contact-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 44px;
+            padding: 0 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 215, 0, .38);
+            background: rgba(255, 215, 0, .08);
+            color: #ffd700;
+            font-size: .82rem;
+            font-weight: 600;
+            letter-spacing: .02em;
+            text-decoration: none;
+            transition: background .25s ease, border-color .25s ease, transform .25s ease;
+        }
+
+        .contact-chip:hover,
+        .contact-chip:focus-visible {
+            background: rgba(255, 215, 0, .18);
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .chip-icon {
+            width: 24px;
+            height: 24px;
+            flex: 0 0 24px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .chip-dot { opacity: .6; }
+
+        .chip-label {
+            color: rgba(255, 255, 255, .82);
+            font-weight: 400;
+        }
+
+        .chip-arrow { margin-left: 2px; }
+
         .location {
             font-size: 1rem;
             line-height: 1.8;
             margin-bottom: 26px;
         }
 
-        @media (max-width: 520px) {
-            .location-row { flex-wrap: wrap; }
-        }
+        /* responsive được gom ở cuối stylesheet */
 
         /* Nút chỉ đường đến trường */
         .directions-btn {
@@ -339,7 +399,8 @@
             align-items: center;
             gap: 8px;
             margin: -4px 0 26px;
-            padding: 10px 18px;
+            min-height: 44px;
+            padding: 0 18px;
             border-radius: 999px;
             background: linear-gradient(135deg, #ffd700, #ffb347);
             color: #2b1d00;
@@ -370,6 +431,14 @@
             text-align: left;
         }
 
+        .parking-heading {
+            margin: 0 0 12px;
+            color: #ffd700;
+            font-size: .95rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+        }
+
         /* 2 tab: Ô tô / Xe máy */
         .parking-tabs {
             display: flex;
@@ -379,7 +448,8 @@
 
         .parking-tab {
             flex: 1;
-            padding: 10px 12px;
+            min-height: 44px;
+            padding: 0 12px;
             border-radius: 10px 10px 0 0;
             border: 1px solid rgba(255, 255, 255, .2);
             border-bottom: none;
@@ -407,22 +477,57 @@
             gap: 10px;
         }
 
+        /* Khung của cả hàng: chứa cả nút chọn lẫn mũi tên chỉ đường */
         .parking-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            padding: 0 8px 0 4px;
+            background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.07));
+            border: 1px solid rgba(255, 215, 0, .24);
+            border-radius: 10px;
+            transition: background .3s ease, border-color .3s ease,
+                        box-shadow .3s ease, transform .3s ease;
+        }
+
+        .parking-row:has(.parking-btn.is-selected) {
+            background: rgba(255, 215, 0, .22);
+            border-color: rgba(255, 215, 0, .7);
+            box-shadow: inset 0 0 0 1px rgba(255, 215, 0, .3);
+        }
+
+        .parking-row:hover,
+        .parking-row:focus-within {
+            background: rgba(255, 255, 255, .95);
+            border-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0,0,0,.28);
         }
 
         .parking-row .parking-btn {
             flex: 1 1 auto;
             width: auto;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            min-height: 48px;
+            padding: 0 0 0 10px;
         }
 
-        /* Mũi tên chỉ đường hiện bên phải khi bãi được chọn */
+        .parking-row .parking-btn:hover,
+        .parking-row .parking-btn:focus-visible,
+        .parking-row .parking-btn.is-selected {
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Mũi tên chỉ đường hiện bên phải, nằm trọn trong khung hàng */
         .parking-arrow {
-            flex: 0 0 36px;
-            width: 36px;
-            height: 36px;
+            flex: 0 0 44px;
+            width: 44px;
+            height: 44px;
             display: grid;
             place-items: center;
             border-radius: 50%;
@@ -516,7 +621,13 @@
             border-top: 1px solid rgba(255, 255, 255, .2);
             border-bottom: 1px solid rgba(255, 255, 255, .2);
             overflow: hidden;
-            background: rgba(0, 0, 0, .2);
+
+            /* Dính đáy card: bản đồ luôn nhìn thấy khi cuộn danh sách 8 bãi */
+            position: sticky;
+            bottom: 0;
+            z-index: 5;
+            background: rgba(10, 16, 30, .97);
+            box-shadow: 0 -10px 26px rgba(0, 0, 0, .34);
         }
 
         .parking-map-head {
@@ -559,17 +670,65 @@
 
         .tips strong { color: #ffd700; }
 
-        /* Responsive cho điện thoại */
+        /* Responsive: tablet */
         @media (max-width: 768px) {
-            .content { width: 92%; padding: 16px; }
+            .content { width: 94%; padding: 14px; }
             .subtitle { letter-spacing: .22em; }
-            .thanks-card { padding: 22px; max-height: 82dvh; }
-            .thanks-text { line-height: 1.8; }
-            .invitation-box { padding: 20px; max-height: 82dvh; }
+            .thanks-card { padding: 22px; max-height: 90dvh; }
+            .thanks-title { font-size: clamp(1.5rem, 5.5vw, 2rem); margin-bottom: 12px; }
+            .thanks-text { font-size: .92rem; line-height: 1.7; }
+            .thanks-sign { margin-top: 12px; }
+            .invitation-box { padding: 18px; max-height: 88dvh; }
+            .invite-text { font-size: 1.1rem; margin-bottom: 16px; }
+            .date-contact-row { margin-bottom: 16px; }
+            .time-date { font-size: 1.2rem; }
+            .location-row { margin-bottom: 18px; }
+            .parking-section { padding-top: 18px; }
+            .parking-heading { font-size: .9rem; margin-bottom: 10px; }
             .parking-btn { gap: 10px; padding: 10px 12px; font-size: .85rem; }
-            .parking-map-wrap { margin-left: -20px; margin-right: -20px; }
-            .parking-map-wrap #parking-map { height: 180px; }
-            .scroll-down { font-size: .8rem; padding: 8px 16px; }
+            .parking-map-wrap { margin-left: -18px; margin-right: -18px; }
+            .parking-map-wrap #parking-map { height: 200px; }
+            .parking-map-head { padding: 8px 12px; font-size: .75rem; }
+            .scroll-down { font-size: .8rem; padding: 0 16px; }
+        }
+
+        /* Responsive: điện thoại nhỏ */
+        @media (max-width: 520px) {
+            .content { width: 96%; padding: 12px; }
+            .title-name { font-size: clamp(2.8rem, 14vw, 4rem); }
+            .subtitle { font-size: .9rem; letter-spacing: .18em; }
+            .details { font-size: .82rem; }
+            .thanks-card { padding: 16px; max-height: 92dvh; }
+            .thanks-eyebrow { letter-spacing: .22em; margin-bottom: 8px; }
+            .thanks-title { font-size: 1.45rem; margin-bottom: 10px; }
+            .thanks-text { font-size: .86rem; line-height: 1.6; }
+            .thanks-sign { font-size: 1rem; margin-top: 8px; }
+
+            .invitation-box { padding: 16px; max-height: calc(100dvh - 64px); }
+            .invite-text { font-size: 1rem; margin-bottom: 14px; }
+            .date-contact-row { flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+            .time-date { font-size: 1.15rem; }
+            .contact-chip-wrap { width: 100%; text-align: left; }
+            .contact-chip { width: 100%; justify-content: center; }
+            .location-row { flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+            .location-row .location { flex: 1 1 100%; font-size: .9rem; }
+            .location-row .directions-btn { flex: 1 1 100%; justify-content: center; margin: 0; }
+
+            .parking-section { padding-top: 16px; }
+            .parking-heading { font-size: .85rem; }
+            .parking-row { padding: 0 6px 0 2px; gap: 4px; }
+            .parking-row .parking-btn { padding-left: 8px; font-size: .8rem; }
+            .parking-map-wrap { margin-left: -16px; margin-right: -16px; }
+            .parking-map-wrap #parking-map { height: 190px; }
+            .parking-map-head span { flex: 1 1 100%; }
+            .scroll-down { font-size: .75rem; padding: 0 14px; }
+        }
+
+        /* Focus rõ ràng khi đi bằng bàn phím (đè các outline:none cũ) */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid #ffd700 !important;
+            outline-offset: 2px !important;
         }
 
         /* Tôn trọng cài đặt giảm chuyển động của hệ thống */
@@ -628,7 +787,22 @@
             <div class="invitation-box">
                 <p class="invite-text reveal">Trân trọng mời bạn đến chung vui.</p>
 
-                <h3 class="time-date reveal" data-delay="1">Thứ Bảy, 28/11/2026<br>12:00–14:00</h3>
+                <div class="date-contact-row">
+                    <h2 class="time-date reveal" data-delay="1">Thứ Bảy, 28/11/2026<br>12:00–14:00</h2>
+
+                    <!-- Chip liên hệ Zalo: căn bên phải, cùng hàng với ngày giờ -->
+                    <div class="contact-chip-wrap reveal" data-delay="1">
+                        <a href="https://zalo.me/0708103015" target="_blank" rel="noopener noreferrer" class="contact-chip"
+                           title="Nhắn mình qua Zalo nếu cần liên hệ"
+                           aria-label="Nhắn tin cho Đăng Khoa qua Zalo: 070 810 3015">
+                            <img src="zalo.png" alt="" aria-hidden="true" class="chip-icon" width="22" height="22">
+                            <span>070 810 3015</span>
+                            <span class="chip-dot" aria-hidden="true">·</span>
+                            <span class="chip-label">Nhắn Zalo</span>
+                            <span class="chip-arrow" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="location-row">
                     <p class="location reveal" data-delay="2">
@@ -645,6 +819,8 @@
                 <!-- PHẦN GỬI XE -->
                 <div class="parking-section reveal" data-delay="3">
 
+                    <h2 class="parking-heading">Nơi gửi xe nè</h2>
+
                     <div class="parking-tabs" role="tablist" aria-label="Chọn loại phương tiện">
                         <button type="button" class="parking-tab is-active" role="tab" aria-selected="true" aria-controls="panel-car" data-tab="car">Ô tô</button>
                         <button type="button" class="parking-tab" role="tab" aria-selected="false" aria-controls="panel-moto" data-tab="moto">Xe máy</button>
@@ -655,11 +831,11 @@
                         <div class="parking-list">
                             <button type="button" class="parking-btn" data-name="Quân Khu 7 (51/2 Thành Thái)" data-lat="10.769999" data-lng="106.665784">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
-                                <span>Quân Khu 7 (51/2 Thành Thái) - Mở 24h</span>
+                                <span>Quân Khu 7 (51/2 Thành Thái)</span>
                             </button>
                             <button type="button" class="parking-btn" data-name="332 Tô Hiến Thành" data-lat="10.7755793" data-lng="106.6630014">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
-                                <span>Bãi giữ xe 332 Tô Hiến Thành - Mở 24h</span>
+                                <span>Bãi giữ xe 332 Tô Hiến Thành</span>
                             </button>
                             <button type="button" class="parking-btn" data-name="138 Đào Duy Từ" data-lat="10.7608154" data-lng="106.6632871">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
@@ -677,7 +853,7 @@
                                 title="Gần cụm Lý Thường Kiệt – Hòa Hảo – Đào Duy Từ, phía sau Co.opmart Lý Thường Kiệt. Nên hỏi trước quy định nhận xe vãng lai trong ngày và khung giờ hoạt động vì một số khu vực ưu tiên sinh viên/cư dân."
                                 data-note="Gần cụm Lý Thường Kiệt – Hòa Hảo – Đào Duy Từ, phía sau Co.opmart Lý Thường Kiệt. Hỏi trước quy định nhận xe vãng lai trong ngày và khung giờ hoạt động (một số khu vực ưu tiên sinh viên/cư dân).">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
-                                <span>KTX Bách khoa (497 Hòa Hảo) - hỏi trước khi gửi</span>
+                                <span>KTX Bách khoa (497 Hòa Hảo)</span>
                             </button>
                             <button type="button" class="parking-btn" data-name="BV Nhân dân 115 (527 Sư Vạn Hạnh)" data-lat="10.7744865" data-lng="106.6665778"
                                 title="Quanh trục Sư Vạn Hạnh – Hòa Hưng, thường có bãi nhận ô tô theo lượt/trong ngày. Đi bộ hoặc xe công nghệ sang Lý Thường Kiệt mất thêm vài phút nhưng dễ xoay xở hơn khi mặt tiền trường kẹt xe."
@@ -703,7 +879,7 @@
                             </button>
                             <button type="button" class="parking-btn" data-name="332 Tô Hiến Thành" data-lat="10.7755793" data-lng="106.6630014">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
-                                <span>Bãi giữ xe 332 Tô Hiến Thành - Mở 24h</span>
+                                <span>Bãi giữ xe 332 Tô Hiến Thành</span>
                             </button>
                             <button type="button" class="parking-btn" data-name="84 Thành Thái" data-lat="10.7728541" data-lng="106.6654793">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
@@ -713,26 +889,27 @@
                                 title="Khu vực KTX Bách khoa (497 Hòa Hảo) & cụm quanh Co.opmart Lý Thường Kiệt. Ngày cao điểm hoặc cuối tuần/lễ nên kiểm tra trực tiếp với bảo vệ xem có nhận vé lượt cho khách dự lễ hay không, đồng thời lưu ý khung giờ đóng cửa."
                                 data-note="KTX Bách khoa (497 Hòa Hảo) & cụm quanh Co.opmart Lý Thường Kiệt. Cao điểm/cuối tuần/lễ: hỏi bảo vệ về vé lượt cho khách dự lễ và khung giờ đóng cửa.">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
-                                <span>KTX Bách khoa (497 Hòa Hảo) - hỏi vé lượt</span>
+                                <span>KTX Bách khoa (497 Hòa Hảo)</span>
                             </button>
                             <button type="button" class="parking-btn" data-name="Dọc Lý Thường Kiệt (gần cổng trường)" data-lat="10.7740592" data-lng="106.6571692"
                                 title="Các điểm giữ xe máy lẻ quanh trục Lý Thường Kiệt – Tô Hiến Thành – Thành Thái. Nên gửi hơi giãn ra khỏi cổng chính một đoạn ngắn rồi đi bộ vào trường: đỡ chen chúc lúc gửi/lấy xe và dễ thoát hướng sau buổi lễ."
                                 data-note="Gửi hơi giãn ra khỏi cổng chính một đoạn ngắn rồi đi bộ vào trường — đỡ chen chúc lúc gửi/lấy xe và dễ thoát hướng sau buổi lễ.">
                                 <span class="pin-icon" aria-hidden="true">📍</span>
-                                <span>Dọc Lý Thường Kiệt - gửi lùi rồi đi bộ</span>
+                                <span>Dọc Lý Thường Kiệt</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- BẢN ĐỒ: nằm ngay dưới danh sách bãi, tràn-full chiều ngang của card -->
-                    <div class="parking-map-wrap">
-                        <div class="parking-map-head" id="map-status">
-                            <span>🏫 Trường Đại học Bách khoa DHQG TP.HCM</span>
-                            <span>📍 Quân Khu 7 (51/2 Thành Thái)</span>
-                        </div>
-                        <div id="parking-map" role="img" aria-label="Bản đồ vị trí trường và bãi gửi xe"></div>
-                    </div>
+                </div>
 
+                <!-- BẢN ĐỒ: ngay dưới danh sách bãi, tràn-full chiều ngang của card.
+                     Làm con trực tiếp của card để position:sticky có không gian dính đáy. -->
+                <div class="parking-map-wrap">
+                    <div class="parking-map-head" id="map-status">
+                        <span>🏫 Trường Đại học Bách khoa DHQG TP.HCM</span>
+                        <span>📍 Quân Khu 7 (51/2 Thành Thái)</span>
+                    </div>
+                    <div id="parking-map" role="img" aria-label="Bản đồ vị trí trường và bãi gửi xe"></div>
                 </div>
             </div>
 
@@ -866,6 +1043,22 @@
 
             /* 4. Tab bãi gửi xe + mũi tên chỉ đường + bản đồ Google Maps 2 pin */
             const school = { name: 'Đại học Bách khoa DHQG TP.HCM', lat: 10.7733495, lng: 106.6596319 };
+
+            // Cung đường thật đã tính sẵn (spot -> trường), mã hoá polyline precision 5.
+            // Không gọi server định tuyến công cộng lúc chạy -> không bao giờ rơi về nét thẳng.
+            const ROUTE_POLYLINES = {
+                '10.769999,106.665784': 'cpv`A{e`jS`AYd@Mh@QKb@eAfEAP@PDXL`@j@fBDHZ~@ZbAN`@L`@DNVj@JAVHRLV?ZKt@bCIBCB@BJ`@L^[LPbBV~B{AVJt@L~@BNRhA@B?BVtA_@FBLMBDTYFE?mB^G@IBmATM@KBaCb@MTIGECCFADADAFE`@MBCZ}AKiAEmAGAIg@HAMWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7755793,106.6630014': 'srw`Amr_jSnBvAA?FDb@VPJHF^VNJv@l@^VHHHFRN\\TJHpD`CVN|@bAJLt@|@@BzElFt@z@AN?HADEPINqFbAWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7608154,106.6632871': 'wwt`Amy_jS??CICWk@NA?YFWDy@JDZw@JVnBg@H?XENELIJKHIBUFFb@g@HTpBG@E@Hv@Df@c@FFj@c@Fi@FLdA@BJv@FZBRQD}@POBQDWNIBUBSDI@OB_C\\C@@RkI|AiCf@OBSBODsDp@YFE?mB^G@IBmATM@KBaCb@MTIGECCFADADAFE`@MBCZ}AKiAEmAGAIg@HAMWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7728541,106.6654793': '{_w`Aka`jS??Nl@HEl@lBjAnDv@|BDLXz@d@tAQFe@PmBt@J^L\\JZN`@Nd@}@lAW\\[f@JLt@|@@BzElFt@z@AN?HADEPINqFbAWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7706289,106.6567257': 'csv`Aok~iSDi@{AKgAGiAGwAIBYDy@?S@QRCWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7599271,106.6621532': 'uqt`Ael_jSHn@ADABa@FSBCO?CKw@gAP@LkB^FVaANI@YDUD_AL_ALe@Fc@Fi@FLdA@BJv@FZBRQD}@POBQDWNIBUBSDI@OB_C\\C@@RkI|AiCf@OBSBODsDp@YFE?mB^G@IBmATM@KBaCb@MTIGECCFADADAFE`@MBCZ}AKiAEmAGAIg@HAMWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7744865,106.6665778': 'iiw`A_j`jSf@jBNd@b@zAl@vBHZc@LYHGBQFQDr@~Bj@dBd@OFNJZPVGLGBE@~AzAo@z@e@r@b@Zh@RHBHBHD^XFBF@DAD?r@YL\\JZN`@Nd@}@lAW\\[f@JLt@|@@BzElFt@z@AN?HADEPINqFbAWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7552173,106.6645696': 'kqs`A{|_jS@FLjAD\\BZwBVO@Jv@UDSBBLk@FiANiBT[BmBVo@FgANkBTSBWBiCZKBK@iD`@M@BNL`AgAP@LkB^FVaANI@YDUD_AL_ALe@Fc@Fi@FLdA@BJv@FZBRQD}@POBQDWNIBUBSDI@OB_C\\C@@RkI|AiCf@OBSBODsDp@YFE?mB^G@IBmATM@KBaCb@MTIGECCFADADAFE`@MBCZ}AKiAEmAGAIg@HAMWBWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD',
+                '10.7728,106.6592': 'w`w`Ac{~iSk@qAEBOHUJKD',
+                '10.7740592,106.6571692': '{hw`Ain~iSvFgAt@OLCn@KVGRCWi@wBp@O]C@e@aAKULGPIFCDCFCCGSa@Qa@c@_ADCAs@?IAEKD'
+            };
+
             const mapEl = document.getElementById('parking-map');
             const mapStatus = document.getElementById('map-status');
             const parkingButtons = Array.prototype.slice.call(document.querySelectorAll('.parking-btn'));
@@ -874,9 +1067,46 @@
             let spotMarker = null;
             let routeLine = null;
             let routeCasing = null;
-            let routeRequestId = 0;
             let currentSpot = null;
+            let spotName = '';
+            let spotNote = '';
             const infoWindow = { instance: null };
+
+            // Dùng AdvancedMarkerElement (không còn cảnh báo Marker deprecated); vẫn có fallback
+            function supportsAdvancedMarker() {
+                return !!(window.google && google.maps.marker && google.maps.marker.AdvancedMarkerElement);
+            }
+
+            function createMarker(options, letter, background) {
+                if (!supportsAdvancedMarker()) return new google.maps.Marker(options);
+                const pin = new google.maps.marker.PinElement({
+                    glyphText: letter,
+                    glyphColor: '#2b1d00',
+                    background: background,
+                    borderColor: '#ffffff'
+                });
+                return new google.maps.marker.AdvancedMarkerElement({
+                    map: options.map,
+                    position: options.position,
+                    title: options.title,
+                    content: pin
+                });
+            }
+
+            function setMarkerPosition(marker, position) {
+                if (supportsAdvancedMarker()) marker.position = position;
+                else marker.setPosition(position);
+            }
+
+            function setMarkerTitle(marker, title) {
+                if (supportsAdvancedMarker()) marker.title = title;
+                else marker.setTitle(title);
+            }
+
+            function onMarkerClick(marker, handler) {
+                if (supportsAdvancedMarker()) marker.addEventListener('gmp-click', handler);
+                else marker.addListener('click', handler);
+            }
 
             // Mỗi bãi gửi xe là một hàng: nút chọn + mũi tên chỉ đường (ẩn cho đến khi chọn)
             parkingButtons.forEach(function (button) {
@@ -911,12 +1141,20 @@
                 return panel && panel.querySelector('.parking-btn');
             }
 
+            // Viền co giãn theo kích thước bản đồ: mobile thấp thì bớt padding để pin không bị chìm
+            function fitBoundsSafely(bounds) {
+                const h = mapEl ? mapEl.offsetHeight : 200;
+                const w = mapEl ? mapEl.offsetWidth : 600;
+                const y = Math.max(24, Math.min(70, Math.round(h * 0.2)));
+                const x = Math.max(20, Math.min(50, Math.round(w * 0.06)));
+                map.fitBounds(bounds, { top: y, bottom: y, left: x, right: x });
+            }
+
             function fitBoth(spot) {
                 const bounds = new google.maps.LatLngBounds();
                 bounds.extend({ lat: school.lat, lng: school.lng });
                 if (spot) bounds.extend({ lat: spot.lat, lng: spot.lng });
-                // Chừa viền lớn để không cắt tên pin / info window
-                map.fitBounds(bounds, { top: 70, bottom: 70, left: 50, right: 50 });
+                fitBoundsSafely(bounds);
             }
 
             function showInfo(marker, title, subtitle) {
@@ -927,7 +1165,8 @@
                     (subtitle ? '<div style="margin-top:4px">' + subtitle + '</div>' : '') +
                     '</div>'
                 );
-                infoWindow.instance.open(map, marker);
+                // Cú pháp mới cũng tương thích AdvancedMarkerElement
+                infoWindow.instance.open({ map: map, anchor: marker });
             }
 
             // Vẽ đường đi theo cung đường thật (OSRM, không cần API key)
@@ -957,52 +1196,62 @@
                 path.forEach(function (p) { bounds.extend(p); });
                 bounds.extend({ lat: school.lat, lng: school.lng });
                 if (spot) bounds.extend({ lat: spot.lat, lng: spot.lng });
-                // Chừa viền để không cắt tên pin / thông tin
-                map.fitBounds(bounds, { top: 70, bottom: 70, left: 50, right: 50 });
+                fitBoundsSafely(bounds);
             }
 
-            function drawRoadRoute(spot) {
-                const requestId = ++routeRequestId;
-                const pair = spot.lng + ',' + spot.lat + ';' + school.lng + ',' + school.lat;
-                const options = '?overview=full&geometries=geojson';
-                const sources = [
-                    'https://routing.openstreetmap.de/routed-foot/route/v1/driving/' + pair + options,
-                    'https://router.project-osrm.org/route/v1/driving/' + pair + options
-                ];
+            // Giải mã polyline (precision 5) thành mảng toạ độ cho Google Maps
+            function decodePolyline(encoded) {
+                const points = [];
+                let index = 0;
+                let lat = 0;
+                let lng = 0;
+                while (index < encoded.length) {
+                    let shift = 0;
+                    let result = 0;
+                    let byte;
+                    do {
+                        byte = encoded.charCodeAt(index++) - 63;
+                        result |= (byte & 0x1f) << shift;
+                        shift += 5;
+                    } while (byte >= 0x20);
+                    lat += (result & 1) ? ~(result >> 1) : (result >> 1);
 
-                function fallback() {
-                    if (requestId !== routeRequestId) return;
+                    shift = 0;
+                    result = 0;
+                    do {
+                        byte = encoded.charCodeAt(index++) - 63;
+                        result |= (byte & 0x1f) << shift;
+                        shift += 5;
+                    } while (byte >= 0x20);
+                    lng += (result & 1) ? ~(result >> 1) : (result >> 1);
+
+                    points.push({ lat: lat / 1e5, lng: lng / 1e5 });
+                }
+                return points;
+            }
+
+            // Đường đi theo cung đường thật, lấy từ dữ liệu có sẵn (không fetch lúc chạy)
+            function drawRoadRoute(spot) {
+                const encoded = ROUTE_POLYLINES[spot.lat + ',' + spot.lng];
+                if (!encoded) {
+                    setRoutePath([
+                        { lat: school.lat, lng: school.lng },
+                        { lat: spot.lat, lng: spot.lng }
+                    ], spot);
+                    return;
+                }
+                try {
+                    const path = decodePolyline(encoded);
+                    // OSRM snaps vào đường gần nhất -> nối thêm đoạn ngắn tới đúng 2 pin
+                    path.unshift({ lat: spot.lat, lng: spot.lng });
+                    path.push({ lat: school.lat, lng: school.lng });
+                    setRoutePath(path, spot);
+                } catch (error) {
                     setRoutePath([
                         { lat: school.lat, lng: school.lng },
                         { lat: spot.lat, lng: spot.lng }
                     ], spot);
                 }
-
-                function trySource(index) {
-                    if (index >= sources.length) { fallback(); return; }
-                    fetch(sources[index])
-                        .then(function (response) {
-                            if (!response.ok) throw new Error('HTTP ' + response.status);
-                            return response.json();
-                        })
-                        .then(function (data) {
-                            if (requestId !== routeRequestId) return;
-                            if (!data || data.code !== 'Ok' || !data.routes || !data.routes[0]) {
-                                throw new Error('Không có route');
-                            }
-                            const coords = data.routes[0].geometry.coordinates;
-                            if (!coords || coords.length < 2) throw new Error('Route quá ngắn');
-                            // GeoJSON trả về [lng, lat]
-                            setRoutePath(coords.map(function (c) {
-                                return { lat: c[1], lng: c[0] };
-                            }), spot);
-                        })
-                        .catch(function () {
-                            if (requestId === routeRequestId) trySource(index + 1);
-                        });
-                }
-
-                trySource(0);
             }
 
             // Luôn có 2 pin: trường học + bãi gửi xe đang chọn
@@ -1015,20 +1264,21 @@
                 if (!map) return; // API chưa tải xong -> initParkingMap sẽ áp dụng currentSpot
 
                 if (!spotMarker) {
-                    spotMarker = new google.maps.Marker({
+                    spotMarker = createMarker({
                         map: map,
-                        title: spot.name,
-                        label: { text: 'P', color: '#fff', fontSize: '13px', fontWeight: 'bold' }
-                    });
-                    google.maps.event.addListener(spotMarker, 'click', function () {
-                        showInfo(spotMarker, spotMarker.getTitle(), spotMarker.get('note') || 'Bãi gửi xe đã chọn');
+                        position: { lat: spot.lat, lng: spot.lng },
+                        title: spot.name
+                    }, 'P', '#ffd700');
+                    onMarkerClick(spotMarker, function () {
+                        showInfo(spotMarker, spotName, spotNote || 'Bãi gửi xe đã chọn');
                     });
                 }
-                spotMarker.setPosition({ lat: spot.lat, lng: spot.lng });
-                spotMarker.setTitle(spot.name);
-                spotMarker.set('note', spot.note || '');
+                setMarkerPosition(spotMarker, { lat: spot.lat, lng: spot.lng });
+                setMarkerTitle(spotMarker, spot.name);
+                spotName = spot.name;
+                spotNote = spot.note || '';
 
-                // Đường đi theo cung đường thật (bị chặn thì mới fallback nét thẳng)
+                // Đường đi theo cung đường thật, có sẵn trong ROUTE_POLYLINES
                 drawRoadRoute(spot);
             }
 
@@ -1038,19 +1288,19 @@
                 map = new google.maps.Map(mapEl, {
                     center: { lat: school.lat, lng: school.lng },
                     zoom: 15,
+                    mapId: 'DEMO_MAP_ID', // bắt buộc để dùng AdvancedMarkerElement
                     mapTypeControl: false,
                     streetViewControl: false,
                     fullscreenControl: false,
                     gestureHandling: 'cooperative'
                 });
 
-                const schoolMarker = new google.maps.Marker({
+                const schoolMarker = createMarker({
                     map: map,
                     position: { lat: school.lat, lng: school.lng },
-                    title: school.name,
-                    label: { text: 'T', color: '#fff', fontSize: '13px', fontWeight: 'bold' }
-                });
-                google.maps.event.addListener(schoolMarker, 'click', function () {
+                    title: school.name
+                }, 'T', '#0068ff');
+                onMarkerClick(schoolMarker, function () {
                     showInfo(schoolMarker, school.name, '268 Lý Thường Kiệt, Phường Diên Hồng');
                 });
 
@@ -1062,17 +1312,21 @@
             if (mapEl) {
                 const mapsScript = document.createElement('script');
                 mapsScript.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(GOOGLE_MAPS_API_KEY) +
-                    '&v=weekly&loading=async&callback=initParkingMap';
+                    '&v=weekly&libraries=marker&loading=async&callback=initParkingMap';
                 mapsScript.async = true;
                 document.head.appendChild(mapsScript);
             }
 
-            // Khi chọn bãi: cuộn bên trong card để bản đồ và 2 pin hiện ra ngay
-            function scrollToMap() {
+            // Bản đồ đã dính đáy card nên thường không cần cuộn; chỉ cuộn nếu trình duyệt cũ không hỗ trợ sticky
+            function ensureMapVisible() {
                 const box = document.querySelector('.invitation-box');
                 const wrap = document.querySelector('.parking-map-wrap');
                 if (!box || !wrap) return;
-                const offset = wrap.getBoundingClientRect().top - box.getBoundingClientRect().top;
+                const boxRect = box.getBoundingClientRect();
+                const wrapRect = wrap.getBoundingClientRect();
+                if (wrapRect.top >= boxRect.top - 2 && wrapRect.bottom <= boxRect.bottom + 2) return;
+
+                const offset = wrapRect.top - boxRect.top;
                 const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 box.scrollTo({
                     top: Math.max(0, box.scrollTop + offset - 8),
@@ -1092,7 +1346,10 @@
                     });
                     parkingButtons.forEach(function (button) { button.classList.remove('is-selected'); });
                     const first = firstButtonInActivePanel();
-                    if (first) renderMap(spotFromButton(first));
+                    if (first) {
+                        first.classList.add('is-selected');
+                        renderMap(spotFromButton(first));
+                    }
                 });
             });
 
@@ -1101,7 +1358,7 @@
                     parkingButtons.forEach(function (item) { item.classList.remove('is-selected'); });
                     button.classList.add('is-selected');
                     renderMap(spotFromButton(button));
-                    scrollToMap();
+                    ensureMapVisible();
                 });
             });
 
